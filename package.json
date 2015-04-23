@@ -1,0 +1,36 @@
+{
+  "name": "maureillas_notifications-server",
+  "version": "0.0.0",
+  "private": true,
+  "main": "sources/app.js",
+  "dependencies": {
+    "body-parser": "~1.5.0",
+    "express": "~4.0.0",
+    "lodash": "~2.4.1",
+    "method-override": "~1.0.0",
+    "string": "^2.2.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-watch": "~0.5.2",
+    "grunt-env": "~0.4.1",
+    "grunt-express-server": "~0.4.2",
+    "grunt-mocha-test": "^0.12.2",
+    "load-grunt-tasks": "~0.1.0",
+    "mocha": "^2.0.1",
+    "supertest": "^0.15.0",
+    "time-grunt": "~0.1.1",
+    "mongoose": "~3.8.8"
+  },
+  "engines": {
+    "node": ">=0.8.0",
+    "npm": "1.2.x"
+  },
+  "scripts": {
+    "start": "node dist/server/app.js",
+    "test": "grunt test"
+  }
+}
