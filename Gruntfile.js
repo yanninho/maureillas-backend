@@ -116,6 +116,12 @@ module.exports = function (grunt) {
         'express:dev',
         'watch'
     ]);
+
+    // Test
+    grunt.registerTask('test', 'Tests', [
+        'env:test',
+        'mochaTest'
+    ]);
     
 
     //Build
