@@ -79,3 +79,8 @@ GET /feeds : {
 		]
 	}
 }
+
+PUT /feeds/{feed} : {
+	description : create a new feed
+	
+}

@@ -8,6 +8,6 @@ var platformSchema = new Schema({
 	name : String
 });
 
-// Export the User model
+// Export the Platform model
 var collectionName = 'platforms';
 module.exports = mongoose.model('Platform', platformSchema, collectionName);

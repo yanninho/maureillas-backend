@@ -1,5 +1,5 @@
 var should   = require('chai').should()
-  , gcm = require('./gcm')
+  , gcm = require('./gcm.service')
   , config = require('../config/environment')
   , tests_devices = config.gcm.tests_devices.android
 ;

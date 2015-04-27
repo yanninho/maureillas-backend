@@ -16,18 +16,6 @@ var userSchema = new Schema({
    feeds : [feedSchema]
 });
 
-
-userSchema.statics.findbyPlatformFeedName = function (platform, feed, callback) {
-	return this.model('User').find(
-	{
-		"platform": platform, 
-		"active": true,
-		"feeds.name" : feed,
-		"feeds.suscriber" : true             
-	}
-	,callback);        
-} 
-
 // Export the User model
 var collectionName = 'users';
 module.exports = mongoose.model('User', userSchema, collectionName);

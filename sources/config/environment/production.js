@@ -21,5 +21,6 @@ module.exports = {
   },
   gcm: {
     api_key: 'AIzaSyAvNezKfuDi-fa80rVLdlYskgQrNjCxEtw'
-  }  
+  },
+  security : 'dvZ3UA6BqgUsLrP82Kj5bDCu6jcsDZ35'  
 };

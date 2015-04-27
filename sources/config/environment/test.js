@@ -12,5 +12,6 @@ module.exports = {
   	tests_devices: {
   		android : ['APA91bFhAvNWQCNPdVHP6vOyv_IdQ4FBKeYe0VEUeXUeYjFqxwuDLKfWnNWPGVmHvNeW-0HWw68LW0vaO6CATGWkYVwuZgQ58BJGXxG3ikn1TpPNLXw6O2KDygsxbNOYyVelS5aXQB5gfisMa0yNOspSML4xFxupGA']
   	}
-  }
+  },
+  security : '2LG5D0Ge0Lk31nrE3FN1J1EpqgzVpJzC'
 };
