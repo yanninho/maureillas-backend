@@ -1,3 +1,5 @@
+'use strict';
+
 var should   = require('chai').should()
   , feedService = require('./feeds.service')
   , feedModel = require('../models/feeds')

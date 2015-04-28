@@ -1,15 +1,23 @@
 # maureillas-backend
 
 Interfaces : 
+---------------
+
+
+---------------
+	Users
+---------------
 
 GET /users/{ID} : {
 	description : return user by id
 	return : {
-		id : ...,
+		_id : ...,
 		platform : ...
 		feeds : [
-			name : ...,
-			suscriber : ...
+			{
+			  name : ...,
+			  suscriber : ...
+			}
 		],
 		active : ...
 	}
@@ -19,30 +27,28 @@ GET /users : {
 	description : return list of users stored on database
 	return : {
 		[
-			id : ...,
-			platform : ...
-			feeds : [
-				name : ...,
-				suscriber : ...
-			]
+			{
+				_id : ...,
+				platform : ...
+				feeds : [
+				  {
+					name : ...,
+					suscriber : ...
+				  }
+				]
+			}
 		]
 	}
 }
 
 PUT /users/{ID}/{PLATFORM} : {
 	description : register a user with ID and PLATFORM
-	return : {
-		code : ...,
-		message : ...
-	}
+	return : 200 OK
 }
 
 DELETE /users/{ID} : {
 	description : unregister a user
-	return : {
-		code : ...,
-		message : ...
-	}
+	return : 200 OK
 }
 
 POST /users/{ID} : {
@@ -50,37 +56,87 @@ POST /users/{ID} : {
 	params obtionnal : {
 		active : ...
 		feeds : [
-			name : ...,
-			suscriber : ...			
+			{
+			  name : ...,
+			  suscriber : ...	
+			}		
 		]
 
 	}
+	return : 200 OK
+}
+
+---------------
+	Platforms
+---------------
+
+GET /platforms : {
+	description : return list of platforms
 	return : {
-		code : ...,
-		message : ...
+		[
+			{
+				name: ...
+			}
+		]
 	}
 }
 
-POST /messages/{feed} : {
-	{feed} : feed id for send to suscribers
-	description : send a message 
-	return : {
-		code : ...,
-		message : ...		
-	}
+PUT /platforms/{PLATFORM} : {
+	description : create a platform
+	return : 200 OK
 }
+
+DELETE /platforms/{PLATFORM} : {
+	description : delete a platform
+	return : 200 OK	
+}
+
+---------------
+	Feeds
+---------------
 
 GET /feeds : {
 	description : return list of feeds
 	return : {
 		[
-			id : ...
-			name : ...
+			{
+				name: ...
+			}
 		]
 	}
 }
 
-PUT /feeds/{feed} : {
-	description : create a new feed
-	
+PUT /feeds/{FEED} : {
+	description : create a feed
+	return : 200 OK
 }
+
+DELETE /feeds/{FEED} : {
+	description : delete a platform
+	return : 200 OK	
+}
+
+
+---------------
+	Messages
+---------------
+
+
+POST /messages/{feed}/{date} : {
+	{feed} : feed id for send to suscribers
+	{date} : date for schedule message
+	description : send a message at date
+	return : 200 OK
+}
+
+POST /messages/{feed} : {
+	{feed} : feed id for send to suscribers
+	description : send a message immediatly
+	return : 200 OK
+}
+
+POST /messages : {
+	description : check messages stored, if date equal today, send message and delete from database
+	return : 200 OK
+}
+

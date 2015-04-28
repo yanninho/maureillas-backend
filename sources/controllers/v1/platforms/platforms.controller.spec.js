@@ -9,7 +9,7 @@ var app = require('../../../app')
 
 describe('Platforms : controllers', function () {
 
-  it('should return list of platforms : GET /platforms', function(done) {
+  it('GET /platforms : should return list of platforms', function(done) {
     request(app)
     .get('/v1/platforms')
     .auth('key', config.security)
@@ -18,26 +18,26 @@ describe('Platforms : controllers', function () {
       should.not.exist(err);
       var platforms = res.body;
       should.exist(platforms);
+      platforms.should.have.length(2);
+      should.not.exist(platforms[0]._id);
+      should.exist(platforms[0].name);
       done();
     })
   }); 
 
-  it('should create a platform stored on database : PUT /platforms/{PLATFORM}', function(done) {
+  it('PUT /platforms/{PLATFORM} : should create a platform stored on database', function(done) {
     request(app)
     .put('/v1/platforms/windowsPhone')
     .auth('key', config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
-      var platformResult = res.body;
-      should.exist(platformResult);
-      platformResult.name.should.equal('windowsPhone');
       done();
     })
   }); 
 
 
-  it('should delete a platform from database by name : DELETE /platforms/{PLATFORM}', function(done) {
+  it('DELETE /platforms/{PLATFORM} : should delete a platform from database by name', function(done) {
     request(app)
     .delete('/v1/platforms/IOS')
     .auth('key', config.security)

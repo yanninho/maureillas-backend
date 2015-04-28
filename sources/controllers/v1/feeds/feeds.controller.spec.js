@@ -18,6 +18,9 @@ describe('Feeds : controllers', function () {
       should.not.exist(err);
       var feeds = res.body;
       should.exist(feeds);
+      feeds.should.have.length(3);
+      should.not.exist(feeds[0]._id);
+      should.exist(feeds[0].name);      
       done();
     })
   }); 
@@ -29,9 +32,6 @@ describe('Feeds : controllers', function () {
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
-      var feedResult = res.body;
-      should.exist(feedResult);
-      feedResult.name.should.equal('another');
       done();
     })
   }); 

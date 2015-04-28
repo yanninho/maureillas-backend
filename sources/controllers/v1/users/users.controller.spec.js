@@ -10,24 +10,29 @@ var app = require('../../../app')
 
 describe('Users : controllers', function () {
 
-  it('should create a user stored on database : PUT /users/{ID}/{PLATFORM}', function(done) {
+  it('PUT /users/{ID}/{PLATFORM} : should create a user stored on database', function(done) {
     request(app)
     .put('/v1/users/AZ34RT5Y/IOS')
     .auth('key', config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
-      var userResult = res.body;
-      should.exist(userResult);
-      userResult._id.should.equal('AZ34RT5Y');
-      userResult.platform.should.equal('IOS');
-      should.exist(userResult.feeds);
-      userResult.feeds.should.have.length(3);
       done();
     })
   }); 
 
-  it('should return the complete list of users stored on database : GET /users', function(done) {
+  it('PUT /users/{ID}/{PLATFORM} : should create a user already exist on database', function(done) {
+    request(app)
+    .put('/v1/users/T6Y890OK/IOS')
+    .auth('key', config.security)
+    .expect(404)
+    .end(function(err, res) {
+      should.not.exist(err);
+      done();
+    })
+  }); 
+
+  it('GET /users : should return the complete list of users stored on database', function(done) {
     request(app)
     .get('/v1/users')
     .auth('key', config.security)
@@ -35,12 +40,13 @@ describe('Users : controllers', function () {
     .end(function(err, res) {
       should.not.exist(err);
       var users = res.body;
+      should.exist(users);
       users.should.have.length(4);
       done();
     })
   });  
 
-  it('should return a user by ID : GET /users/{ID}', function(done) {
+  it('GET /users/{ID} : should return a user by ID', function(done) {
     request(app)
     .get('/v1/users/T6Y890OK')
     .auth('key', config.security)
@@ -55,7 +61,7 @@ describe('Users : controllers', function () {
     })
   });  
 
-  it('should delete a user from database by ID : DELETE /users/{ID}', function(done) {
+  it('DELETE /users/{ID} : should delete a user from database by ID', function(done) {
     request(app)
     .delete('/v1/users/T6Y890OK')
     .auth('key', config.security)
@@ -66,7 +72,7 @@ describe('Users : controllers', function () {
     })
   });  
 
-  it('should update user data : POST /users/{ID}', function(done) {
+  it('POST /users/{ID} : should update user data', function(done) {
     var newFeeds = [
      {
       name : 'agenda',

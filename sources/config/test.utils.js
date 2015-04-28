@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var platformTest = require('../models/platforms.seed');
 var feedTest = require('../models/feeds.seed');
 var userTest = require('../models/users.seed');
+var messageTest = require('../models/messages.seed');
 
 // ensure the NODE_ENV is set to 'test'
 // this is helpful when you would like to change behavior when testing
@@ -24,6 +25,7 @@ beforeEach(function (done) {
      platformTest.seed();
      feedTest.seed();
      userTest.seed();  
+     messageTest.seed();
  }
 
  function reconnect() {

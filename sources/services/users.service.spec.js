@@ -1,3 +1,5 @@
+'use strict';
+
 var should   = require('chai').should()
   , userService = require('./users.service')
   , utils = require('../config/test.utils') 

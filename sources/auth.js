@@ -10,8 +10,6 @@ exports.control = function (req, res, next) {
 
   var control = basicAuth(req);
 
-  console.log(control);
-
   if (!control || control.pass != config.security) {
     return unauthorized(res);
   }
