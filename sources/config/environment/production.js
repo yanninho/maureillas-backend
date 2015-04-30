@@ -16,11 +16,10 @@ module.exports = {
   mongo: {
     uri:    process.env.MONGOLAB_URI ||
             process.env.MONGOHQ_URL ||
-            process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME ||
-            'mongodb://yannsm:samtino@ds027751.mongolab.com:27751/heroku_app32596542'
+            process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME
   },
   gcm: {
-    api_key: 'AIzaSyAvNezKfuDi-fa80rVLdlYskgQrNjCxEtw'
+    api_key: process.env.GCM_API_KEY
   },
-  security : 'dvZ3UA6BqgUsLrP82Kj5bDCu6jcsDZ35'  
+  security : process.env.SECURITY_ACCESS  
 };
