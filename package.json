@@ -36,7 +36,7 @@
     "npm": "1.2.x"
   },
   "scripts": {
-    "start": "node dist/server/app.js",
+    "start": "node dist/app.js",
     "test": "grunt test"
   }
 }

@@ -73,7 +73,7 @@ module.exports = function (grunt) {
             },
             prod: {
                options: {
-               script: 'dist/server/app.js'
+               script: 'dist/app.js'
                }
             }            
         },
@@ -85,7 +85,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'sources',
-                    dest: 'dist/server',
+                    dest: 'dist/',
                     src: [
                         '**/*'
                     ]
