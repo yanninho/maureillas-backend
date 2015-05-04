@@ -6,8 +6,9 @@ var express = require('express')
    ,auth = require('../../../auth')
 ;
 
-router.post('/:FEED', auth.control, controller.sendMessages);
-router.post('/:FEED/:DATE', auth.control, controller.scheduleMessages);
-router.post('/', auth.control, controller.checkMessages);
+router.put('/:FEED', controller.sendMessages);
+router.put('/:FEED/:DATE', controller.scheduleMessages);
+router.put('/', controller.sendCustomMessages);
+router.post('/', controller.checkMessages);
 
 module.exports = router;

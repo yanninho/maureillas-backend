@@ -1,6 +1,7 @@
 'use strict';
 
-var feedService = require('../../../services/feeds.service')
+var feedService = require('../../../services/feeds.service'),
+    userService = require('../../../services/users.service')
 ;
 
 exports.getAll = function(req, res) {
@@ -30,6 +31,9 @@ exports.createFeed = function(req, res) {
          try {
             if (err) return res.send(500, err.message);
             if (!createdFeed) return res.send(500, 'Error : Unable to create feed');
+            userService.addFeed(createdFeed, function(err) {
+              console.log(err);
+            });
             return res.json(createdFeed);
          }
          catch(err) {

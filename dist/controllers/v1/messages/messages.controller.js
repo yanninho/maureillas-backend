@@ -14,7 +14,7 @@ var googleSend = function(feed, callback) {
 		users.forEach(function(user) {
 			registration_ids.push(user._id);
 		})		
-		gcmService.sendMessage(registration_ids, 'New article on ' + feed, callback);
+		gcmService.sendMessage(registration_ids, 'Un nouvel article ' + feed, callback);
 	});	
 }
  
@@ -33,6 +33,36 @@ exports.sendMessages = function(req, res) {
 			}
 			return res.json(results);
 	});
+}
+ 
+exports.sendCustomMessages = function(req, res) {
+	var text = req.body.text;
+	if (!text) {
+		return res.send(400, 'The request must contain a text parameter');
+	}
+    var results = {};
+    var nbIos = 0;
+    var errors = [];
+
+    userService.findActive(function(err, users) {
+		if (err) return;
+		if (!users) return;
+
+		var registration_ids = [];
+		users.forEach(function(user) {
+			registration_ids.push(user._id);
+		})		
+		gcmService.sendMessage(registration_ids, text, function(err, result) {
+			var results = {
+				google : result
+			}
+			if (err) {
+				results.google.errors = err;				
+			}
+			return res.json(results);
+		});    	
+  	});
+
 }
 
 exports.scheduleMessages = function(req, res) {

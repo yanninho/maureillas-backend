@@ -6,8 +6,8 @@ var express = require('express')
    ,auth = require('../../../auth')
 ;
 
-router.get('/', auth.control, controller.getAll);
-router.put('/:PLATFORM', auth.control, controller.createPlatform);
-router.delete('/:PLATFORM', auth.control, controller.deletePlatform);
+router.get('/', controller.getAll);
+router.put('/:PLATFORM', controller.createPlatform);
+router.delete('/:PLATFORM', controller.deletePlatform);
 
 module.exports = router;

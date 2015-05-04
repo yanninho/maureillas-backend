@@ -48,5 +48,12 @@ exports.seed = function() {
 			}
 			]
 		}
+,
+		{
+			_id   : 'EEFDCG',
+			platform  : 'IOS',
+			active : false,
+			feeds : []
+		}
 	)                		
 }

@@ -6,8 +6,8 @@ var express = require('express')
    ,auth = require('../../../auth')
 ;
 
-router.get('/', auth.control, controller.getAll);
-router.put('/:FEED', auth.control, controller.createFeed);
-router.delete('/:FEED', auth.control, controller.deleteFeed);
+router.get('/', controller.getAll);
+router.put('/:FEED', controller.createFeed);
+router.delete('/:FEED', controller.deleteFeed);
 
 module.exports = router;
