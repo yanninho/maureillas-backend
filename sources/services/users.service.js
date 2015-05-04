@@ -55,6 +55,20 @@ exports.findbyPlatformFeedName = function (platformName, feedName, callback) {
   ,callback);        
 } 
 
+exports.addFeed = function(feed, callback) {
+  userModel.find(function(err, userResult) {
+    var users = userResult;
+    users.forEach(function(user){
+        user.feeds.push({
+          name : feed.name,
+          suscriber : true
+        })
+        user.save();
+    });
+  });
+  return callback();
+}
+
 exports.updateFeeds = function(userId, newFeeds, callback) {
   userModel.findById(userId, function(err, user) {
     if (err || !user) throw new Error('User not found');
@@ -65,6 +79,13 @@ exports.updateFeeds = function(userId, newFeeds, callback) {
 
 exports.findAll = function(callback) {
   userModel.find(callback);
+}
+
+exports.findActive = function(callback) {
+  userModel.find(  {
+    "active": true           
+  }
+  ,callback);
 }
 
 exports.findById = function(id, callback) {

@@ -122,15 +122,23 @@ DELETE /feeds/{FEED} : {
 ---------------
 
 
-POST /messages/{feed}/{date} : {
+PUT /messages/{feed}/{date} : {
 	{feed} : feed id for send to suscribers
 	{date} : date for schedule message
 	description : send a message at date
 	return : 200 OK
 }
 
-POST /messages/{feed} : {
+PUT /messages/{feed} : {
 	{feed} : feed id for send to suscribers
+	description : send a message immediatly
+	return : 200 OK
+}
+
+PUT /messages : {
+	params : {
+		text : ... // text message which send to all active users
+	}
 	description : send a message immediatly
 	return : 200 OK
 }

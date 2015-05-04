@@ -6,10 +6,10 @@ var express = require('express')
    ,auth = require('../../../auth')
 ;
 
-router.put('/:ID/:PLATFORM', auth.control, controller.createUser);
-router.get('/', auth.control, controller.getAll);
-router.get('/:ID', auth.control, controller.getUser);
-router.delete('/:ID', auth.control, controller.deleteUser);
-router.post('/:ID', auth.control, controller.updateUser);
+router.put('/:ID/:PLATFORM', controller.createUser);
+router.get('/', controller.getAll);
+router.get('/:ID', controller.getUser);
+router.delete('/:ID', controller.deleteUser);
+router.post('/:ID', controller.updateUser);
 
 module.exports = router;
