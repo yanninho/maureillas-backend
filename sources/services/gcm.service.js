@@ -18,6 +18,7 @@ exports.sendMessage = function(registration_ids, message,callback) {
 
 	var configMessage = {
 		data : {
+			title : 'Ville de Maureillas',
 			message : message
 		}
 	}
