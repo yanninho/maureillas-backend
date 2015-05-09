@@ -5,7 +5,7 @@ var userService = require('../../../services/users.service');
 exports.createUser = function(req, res) {
     var id = req.params.ID;
     var platform = req.params.PLATFORM;
-    
+    console.log('0');
     userService.findById(id, function(err, user) {
       console.log('1');
       if (err) return res.send(500, err.message);
