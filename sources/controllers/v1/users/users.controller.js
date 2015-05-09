@@ -7,15 +7,21 @@ exports.createUser = function(req, res) {
     var platform = req.params.PLATFORM;
     
     userService.findById(id, function(err, user) {
+      console.log('1');
       if (err) return res.send(500, err.message);
+      console.log('2');
       if (user) return res.json(user);
+      console.log('3');
         userService.create(id, platform, function (err, createdUser) {
              try {
                 if (err) return res.send(500, err.message);
-                if (!createdUser) return res.send(500, 'Error : Unable to create user');               
+                console.log('4');
+                if (!createdUser) return res.send(500, 'Error : Unable to create user');
+                console.log('5');               
                 return res.json(createdUser);
              }
              catch(err) {
+                console.log('6');
                 return res.send(500, err.message);
              }
         });      
