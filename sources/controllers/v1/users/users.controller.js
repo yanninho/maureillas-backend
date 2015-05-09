@@ -71,6 +71,7 @@ exports.updateUser = function(req, res) {
 };
 
 exports.getUser = function(req, res) {
+  console.log('##########################');
   var id = req.params.ID;
   userService.findById(id, function(err,user) {
      try {
