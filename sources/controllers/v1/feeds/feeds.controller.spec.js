@@ -12,7 +12,7 @@ describe('Feeds : controllers', function () {
   it('should return list of feeds : GET /feeds', function(done) {
     request(app)
     .get('/v1/feeds')
-    //.auth('key', config.security)
+    .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
@@ -28,7 +28,7 @@ describe('Feeds : controllers', function () {
   it('should create a feed stored on database : PUT /feeds/{FEED}', function(done) {
     request(app)
     .put('/v1/feeds/another')
-    //.auth('key', config.security)
+    .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
@@ -40,7 +40,7 @@ describe('Feeds : controllers', function () {
   it('should delete a feed from database by name : DELETE /feeds/{FEED}', function(done) {
     request(app)
     .delete('/v1/feeds/news')
-    //.auth('key', config.security)
+    .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);

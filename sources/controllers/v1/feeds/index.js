@@ -3,7 +3,6 @@
 var express = require('express')
    ,controller = require('./feeds.controller')
    ,router = express.Router()
-   ,auth = require('../../../auth')
 ;
 
 router.get('/', controller.getAll);

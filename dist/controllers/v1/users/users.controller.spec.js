@@ -13,7 +13,7 @@ describe('Users : controllers', function () {
   it('PUT /users/{ID}/{PLATFORM} : should create a user stored on database', function(done) {
     request(app)
     .put('/v1/users/AZ34RT5Y/IOS')
-    //.auth('key', config.security)
+    .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
@@ -27,7 +27,7 @@ describe('Users : controllers', function () {
   it('PUT /users/{ID}/{PLATFORM} : should create a user already exist on database', function(done) {
     request(app)
     .put('/v1/users/T6Y890OK/IOS')
-    //.auth('key', config.security)
+    .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
@@ -41,7 +41,7 @@ describe('Users : controllers', function () {
   it('GET /users : should return the complete list of users stored on database', function(done) {
     request(app)
     .get('/v1/users')
-    //.auth('key', config.security)
+    .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
@@ -55,7 +55,7 @@ describe('Users : controllers', function () {
   it('GET /users/{ID} : should return a user by ID', function(done) {
     request(app)
     .get('/v1/users/T6Y890OK')
-    //.auth('key', config.security)
+    .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
@@ -70,7 +70,7 @@ describe('Users : controllers', function () {
   it('DELETE /users/{ID} : should delete a user from database by ID', function(done) {
     request(app)
     .delete('/v1/users/T6Y890OK')
-    //.auth('key', config.security)
+    .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
@@ -96,7 +96,7 @@ describe('Users : controllers', function () {
 
     request(app)
     .post('/v1/users/T6Y890OK')
-    //.auth('key', config.security)
+    .set('authorization', 'Basic key:' + config.security)
     .send({ 
       feeds: newFeeds
     })

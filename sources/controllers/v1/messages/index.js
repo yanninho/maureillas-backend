@@ -3,7 +3,6 @@
 var express = require('express')
    ,controller = require('./messages.controller')
    ,router = express.Router()
-   ,auth = require('../../../auth')
 ;
 
 router.put('/:FEED', controller.sendMessages);

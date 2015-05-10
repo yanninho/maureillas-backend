@@ -3,7 +3,6 @@
 var express = require('express')
    ,controller = require('./users.controller')
    ,router = express.Router()
-   ,auth = require('../../../auth')
 ;
 
 router.put('/:ID/:PLATFORM', controller.createUser);
