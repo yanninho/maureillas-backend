@@ -8,21 +8,17 @@ exports.createUser = function(req, res) {
     
     userService.findById(id, function(err, user) {
       if (err) return res.send(500, err.message);
-      if (!user) {
+      if (user) return res.json(user);
         userService.create(id, platform, function (err, createdUser) {
              try {
                 if (err) return res.send(500, err.message);
-                if (!createdUser) return res.send(500, 'Error : Unable to create user');
-                return res.send(200);
+                if (!createdUser) return res.send(500, 'Error : Unable to create user');               
+                return res.json(createdUser);
              }
              catch(err) {
                 return res.send(500, err.message);
              }
-        });        
-      }
-      else {
-        return res.send(404);        
-      }
+        });      
     })
 };
 

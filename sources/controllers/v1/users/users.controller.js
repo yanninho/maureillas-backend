@@ -5,23 +5,17 @@ var userService = require('../../../services/users.service');
 exports.createUser = function(req, res) {
     var id = req.params.ID;
     var platform = req.params.PLATFORM;
-    console.log('0');
+    
     userService.findById(id, function(err, user) {
-      console.log('1');
       if (err) return res.send(500, err.message);
-      console.log('2');
       if (user) return res.json(user);
-      console.log('3');
         userService.create(id, platform, function (err, createdUser) {
              try {
                 if (err) return res.send(500, err.message);
-                console.log('4');
-                if (!createdUser) return res.send(500, 'Error : Unable to create user');
-                console.log('5');               
+                if (!createdUser) return res.send(500, 'Error : Unable to create user');               
                 return res.json(createdUser);
              }
              catch(err) {
-                console.log('6');
                 return res.send(500, err.message);
              }
         });      
@@ -71,7 +65,6 @@ exports.updateUser = function(req, res) {
 };
 
 exports.getUser = function(req, res) {
-  console.log('##########################');
   var id = req.params.ID;
   userService.findById(id, function(err,user) {
      try {

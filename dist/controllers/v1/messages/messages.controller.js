@@ -14,7 +14,7 @@ var googleSend = function(feed, callback) {
 		users.forEach(function(user) {
 			registration_ids.push(user._id);
 		})		
-		gcmService.sendMessage(registration_ids, 'Un nouvel article ' + feed, callback);
+		gcmService.sendMessage(registration_ids, 'Un nouvel article est disponible dans la catégorie : ' + feed, callback);
 	});	
 }
  

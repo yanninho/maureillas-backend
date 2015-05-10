@@ -17,6 +17,9 @@ describe('Users : controllers', function () {
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
+      var user = res.body;
+      should.exist(user);
+      user._id.should.equal('AZ34RT5Y');
       done();
     })
   }); 
@@ -25,9 +28,12 @@ describe('Users : controllers', function () {
     request(app)
     .put('/v1/users/T6Y890OK/IOS')
     //.auth('key', config.security)
-    .expect(404)
+    .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
+      var user = res.body;
+      should.exist(user);
+      user._id.should.equal('T6Y890OK');
       done();
     })
   }); 
