@@ -49,13 +49,19 @@ module.exports = function (grunt) {
                     ]
                 }
                 ]
+            },
+            coverage: {
+              src: ['coverage/']
             }
         },
         // configure tasks by environnement
         env: {
           test: {
-            NODE_ENV: 'test',
+            NODE_ENV: 'test'
           },
+          coverage: {
+            APP_DIR_FOR_CODE_COVERAGE: '../test/coverage/instrument/sources/'
+          },          
           prod: {
             NODE_ENV: 'production'
           },
@@ -77,7 +83,6 @@ module.exports = function (grunt) {
                }
             }            
         },
-
         // Copy Config
         // Put files not handled in other tasks here
         copy: {
@@ -86,9 +91,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'sources',
                     dest: 'dist/',
-                    src: [
-                        '**/*'
-                    ]
+                    src: ['**/*']
                 }]  
             } 
         },
@@ -96,8 +99,28 @@ module.exports = function (grunt) {
           options: {
             reporter: 'spec'
           },
-          src: ['sources/**/*.spec.js']
-        } 
+          src: ['test/**/*.spec.js']
+        },
+        instrument: {
+          files: ['sources/**/*.js'],
+          options: {
+            lazy: true,            
+            basePath: 'test/coverage/instrument/'
+          }
+        },   
+        storeCoverage: {
+          options: {
+            dir: 'test/coverage/reports'
+          }
+        },
+        makeReport: {
+          src: 'test/coverage/reports/**/*.json',
+          options: {
+            type: 'lcov',
+            dir: 'test/coverage/reports',
+            print: 'detail'
+          }
+        }              
     });
 
     // Register Tasks
@@ -122,7 +145,15 @@ module.exports = function (grunt) {
         'env:test',
         'mochaTest'
     ]);
-    
+  
+    grunt.registerTask('coverage', [
+        'clean:coverage',
+        'env:coverage', 
+        'instrument', 
+        'mochaTest',
+        'storeCoverage', 
+        'makeReport'
+    ]);    
 
     //Build
     grunt.registerTask('build', 'Build production.', [
