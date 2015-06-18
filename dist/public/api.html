@@ -1,0 +1,239 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Maureillas Backend API REST V1</title><link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200"><style>/* Highlight.js Theme Tomorrow */
+.hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}</style><style>body,
+h4,
+h5 {
+  font-family: 'Roboto' sans-serif !important;
+}
+h1,
+h2,
+h3,
+.aglio {
+  font-family: 'Raleway' sans-serif !important;
+}
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a {
+  display: none;
+}
+h1:hover a,
+h2:hover a,
+h3:hover a,
+h4:hover a,
+h5:hover a {
+  display: inline;
+}
+code {
+  color: #444;
+  background-color: #ddd;
+  font-family: 'Inconsolata' monospace !important;
+}
+a[data-target] {
+  cursor: pointer;
+}
+h4 {
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.back-to-top {
+  position: fixed;
+  z-index: 1;
+  bottom: 0px;
+  right: 24px;
+  padding: 4px 8px;
+  background-color: #eee;
+  text-decoration: none !important;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-left: 1px solid rgba(0,0,0,0.1);
+  border-right: 1px solid rgba(0,0,0,0.1);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.panel {
+  overflow: hidden;
+}
+.panel-heading code {
+  margin-left: 3px;
+  color: #c7254e;
+  background-color: rgba(255,255,255,0.7);
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.panel-heading h3 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+a.list-group-item:hover {
+  background-color: #f8f8f8;
+  border-left: 2px solid #555;
+  padding-left: 15px;
+}
+.indent {
+  display: block;
+  text-indent: 16px;
+}
+.list-group-item {
+  padding-left: 16px;
+}
+.list-group-item .toggle .open {
+  display: block;
+}
+.list-group-item .toggle .closed {
+  display: none;
+}
+.list-group-item.collapsed .toggle .open {
+  display: none;
+}
+.list-group-item.collapsed .toggle .closed {
+  display: block;
+}
+a.list-group-item {
+  font-size: 13px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+a.list-group-item.heading {
+  font-size: 15px;
+  background-color: #f5f5f5;
+}
+a.list-group-item.heading:hover {
+  background-color: #f8f8f8;
+}
+.list-group-item.collapse {
+  display: none;
+}
+.list-group-item.collapse.in {
+  display: block;
+}
+.list-group-item a span.closed {
+  display: none;
+}
+.list-group-item a span.open {
+  display: block;
+}
+.list-group-item a.collapsed span.closed {
+  display: block;
+}
+.list-group-item a.collapsed span.open {
+  display: none;
+}
+#nav {
+  width: inherit;
+  margin-top: 38px;
+  max-width: 255px;
+  top: 0;
+  bottom: 0;
+  padding-right: 12px;
+  padding-bottom: 12px;
+  overflow-y: auto;
+}
+@media (max-width: 1199px) {
+  #nav {
+    max-width: 212px;
+  }
+}
+</style></head><body><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><div class="col-md-3"><nav id="nav" class="hidden-sm hidden-xs affix nav"><div class="list-group"><a data-toggle="" data-target="#users-menu" href="#users" class="list-group-item heading collapsed">Users</a><div id="users-menu"><a href="#users-list-all" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">List all</a><a href="#users-list-all-get" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span><span class="indent">retrieve all users</span></a><a href="#users-list-all-put" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-warning"><i class="fa fa-pencil"></i></span><span class="indent">create a new user</span></a><a href="#users-specific-user-by-id" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">specific user by ID</a><a href="#users-specific-user-by-id-get" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span><span class="indent">return user by id</span></a><a href="#users-specific-user-by-id-delete" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-danger"><i class="fa fa-times"></i></span><span class="indent">unregister a user</span></a><a href="#users-specific-user-by-id-post" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span><span class="indent">update user datas</span></a></div></div><div class="list-group"><a data-toggle="" data-target="#platforms-menu" href="#platforms" class="list-group-item heading collapsed">Platforms</a><div id="platforms-menu"><a href="#platforms-list-all" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>List all</a><a href="#platforms-specific-platform-by-platform-id" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">specific platform by PLATFORM ID</a><a href="#platforms-specific-platform-by-platform-id-put" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-warning"><i class="fa fa-pencil"></i></span><span class="indent">create a new platform</span></a><a href="#platforms-specific-platform-by-platform-id-delete" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-danger"><i class="fa fa-times"></i></span><span class="indent">delete a platform</span></a></div></div><div class="list-group"><a data-toggle="" data-target="#feeds-menu" href="#feeds" class="list-group-item heading collapsed">Feeds</a><div id="feeds-menu"><a href="#feeds-list-all" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span>List all</a><a href="#feeds-specific-feed-by-feed-id" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">specific feed by FEED ID</a><a href="#feeds-specific-feed-by-feed-id-put" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-warning"><i class="fa fa-pencil"></i></span><span class="indent">create a new feed</span></a><a href="#feeds-specific-feed-by-feed-id-delete" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-danger"><i class="fa fa-times"></i></span><span class="indent">delete a feed</span></a></div></div><div class="list-group"><a data-toggle="" data-target="#messages-menu" href="#messages" class="list-group-item heading collapsed">Messages</a><div id="messages-menu"><a href="#messages-list-all" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">List all</a><a href="#messages-list-all-get" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-info"><i class="fa fa-arrow-down"></i></span><span class="indent">retrieve all messages scheduled</span></a><a href="#messages-list-all-put" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-warning"><i class="fa fa-pencil"></i></span><span class="indent">send a message to all active users</span></a><a href="#messages-list-all-post" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-success"><i class="fa fa-plus"></i></span><span class="indent">check stored messages</span></a><a href="#messages-specific-feed-by-feed-id" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item"><span class="badge alert-warning"><i class="fa fa-pencil"></i></span>specific feed by FEED ID</a></div></div></nav></div><div class="col-md-8"><div><header><div class="page-header"><h1 id="top">Maureillas Backend API REST V1</h1></div></header><div class="description"><p>This document describes API REST Services for Mobile Maureillas Application</p>
+</div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="users">Users&nbsp;<a href="#users"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="users-list-all">List all&nbsp;<a href="#users-list-all"><i class="fa fa-link"></i></a></h4><section id="users-list-all-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">retrieve all users</span></div><div style="float:left"><a href="#users-list-all-get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/v1/users</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#58064c6979c33e99b4b9ed0b0edbdaad" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="58064c6979c33e99b4b9ed0b0edbdaad" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#347f8e0fa752af4b02a80f149ded2eae" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="347f8e0fa752af4b02a80f149ded2eae" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre></li></ul></section><section id="users-list-all-put" class="panel panel-warning"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">create a new user</span></div><div style="float:left"><a href="#users-list-all-put" class="btn btn-xs btn-warning">PUT</a></div><div style="overflow:hidden"><code>/v1/users</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#2f99483fd6223ea848c01fa934b20baa" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="2f99483fd6223ea848c01fa934b20baa" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>{
+    "<span class="hljs-attribute">user</span>" : <span class="hljs-value">{
+        "<span class="hljs-attribute">id</span>" : <span class="hljs-value"><span class="hljs-string">"AZ34RT5Y"</span></span>,
+        "<span class="hljs-attribute">platform</span>" : <span class="hljs-value"><span class="hljs-string">"IOS"</span>
+    </span>}
+</span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#7b722ce3ccb8429a4ddcf6822d23d71e" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="7b722ce3ccb8429a4ddcf6822d23d71e" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>        {
+            "<span class="hljs-attribute">__v</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+            "<span class="hljs-attribute">_id</span>": <span class="hljs-value"><span class="hljs-string">"AZ34RT5Y"</span></span>,
+            "<span class="hljs-attribute">platform</span>": <span class="hljs-value"><span class="hljs-string">"IOS"</span></span>,
+            "<span class="hljs-attribute">active</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+            "<span class="hljs-attribute">feeds</span>": <span class="hljs-value">[
+                {
+                    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"agenda"</span></span>,
+                    "<span class="hljs-attribute">suscriber</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+                    "<span class="hljs-attribute">_id</span>": <span class="hljs-value"><span class="hljs-string">"5582e935efd5132f0005b655"</span>
+                </span>},
+                {
+                    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"animals"</span></span>,
+                    "<span class="hljs-attribute">suscriber</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+                    "<span class="hljs-attribute">_id</span>": <span class="hljs-value"><span class="hljs-string">"5582e935efd5132f0005b654"</span>
+                </span>},
+                {
+                    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"news"</span></span>,
+                    "<span class="hljs-attribute">suscriber</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+                    "<span class="hljs-attribute">_id</span>": <span class="hljs-value"><span class="hljs-string">"5582e935efd5132f0005b653"</span>
+                </span>}
+            ]
+        </span>}
+</code></pre></li></ul></section><h4 id="users-specific-user-by-id">specific user by ID&nbsp;<a href="#users-specific-user-by-id"><i class="fa fa-link"></i></a></h4><section id="users-specific-user-by-id-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">return user by id</span></div><div style="float:left"><a href="#users-specific-user-by-id-get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/v1/users/{ID}</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>ID</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>T6Y890OK</span></span><p>The user ID</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#f3f79e1c17a9815bd4fd103a531ba1d3" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="f3f79e1c17a9815bd4fd103a531ba1d3" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#92a58b2f97a545b65faf6adc833af2b2" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="92a58b2f97a545b65faf6adc833af2b2" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>        {
+            "<span class="hljs-attribute">_id</span>": <span class="hljs-value"><span class="hljs-string">"T6Y890OK"</span></span>,
+            "<span class="hljs-attribute">platform</span>": <span class="hljs-value"><span class="hljs-string">"GOOGLE"</span></span>,
+            "<span class="hljs-attribute">active</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+            "<span class="hljs-attribute">__v</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+            "<span class="hljs-attribute">feeds</span>": <span class="hljs-value">[
+                {
+                    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"feed fake"</span></span>,
+                    "<span class="hljs-attribute">suscriber</span>": <span class="hljs-value"><span class="hljs-literal">false</span></span>,
+                    "<span class="hljs-attribute">_id</span>": <span class="hljs-value"><span class="hljs-string">"557bfc23dfcd9956011be8e0"</span>
+                </span>}
+            ]
+        </span>}                 
+</code></pre></li></ul></section><section id="users-specific-user-by-id-delete" class="panel panel-danger"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">unregister a user</span></div><div style="float:left"><a href="#users-specific-user-by-id-delete" class="btn btn-xs btn-danger">DELETE</a></div><div style="overflow:hidden"><code>/v1/users/{ID}</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>ID</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>T6Y890OK</span></span><p>The user ID</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#83750d8c01d5d89eea5777a96715377d" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="83750d8c01d5d89eea5777a96715377d" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#2a3fdd1fd3339eeb6053ffce1764f5f6" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="2a3fdd1fd3339eeb6053ffce1764f5f6" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/plain</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-title">OK</span>
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>0</code></strong><a data-toggle="collapse" data-target="#224ab466c4b14ee48efc3116cfe48b6e" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="224ab466c4b14ee48efc3116cfe48b6e" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li></ul></section><section id="users-specific-user-by-id-post" class="panel panel-success"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">update user datas</span></div><div style="float:left"><a href="#users-specific-user-by-id-post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/v1/users/{ID}</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>ID</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>T6Y890OK</span></span><p>The user ID</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#bc152af309c1fe4505f0b81ea9d235cb" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="bc152af309c1fe4505f0b81ea9d235cb" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#3660552de18e02c00c001f768dd21da1" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="3660552de18e02c00c001f768dd21da1" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/plain</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-title">OK</span>
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>400</code></strong><a data-toggle="collapse" data-target="#225d8101443c104dab7bf3197331768f" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="225d8101443c104dab7bf3197331768f" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/plain</span><br></code></pre><h5>Body</h5><pre><code>Invalid request, missing POST <span class="hljs-type">parameter</span> feeds
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="platforms">Platforms&nbsp;<a href="#platforms"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="platforms-list-all">List all&nbsp;<a href="#platforms-list-all"><i class="fa fa-link"></i></a></h4><section id="platforms-list-all-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">retrieve all platforms</span></div><div style="float:left"><a href="#platforms-list-all-get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/v1/platforms</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#00d69e1d58ab08ac778520269d897098" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="00d69e1d58ab08ac778520269d897098" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#9b3d5ac045e7a90366eaebe6e4af6234" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="9b3d5ac045e7a90366eaebe6e4af6234" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>        [
+            {
+                "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"IOS"</span>
+            </span>},
+            {
+                "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"GOOGLE"</span>
+            </span>}
+        ]
+</code></pre></li></ul></section><h4 id="platforms-specific-platform-by-platform-id">specific platform by PLATFORM ID&nbsp;<a href="#platforms-specific-platform-by-platform-id"><i class="fa fa-link"></i></a></h4><section id="platforms-specific-platform-by-platform-id-put" class="panel panel-warning"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">create a new platform</span></div><div style="float:left"><a href="#platforms-specific-platform-by-platform-id-put" class="btn btn-xs btn-warning">PUT</a></div><div style="overflow:hidden"><code>/v1/platforms/{PLATFORM}</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>PLATFORM</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>windowsPhone</span></span><p>The platform name</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#eec1de80441ee9db8c3dc3960cdf50c4" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="eec1de80441ee9db8c3dc3960cdf50c4" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#955a338efbc7a569a5346358472565c2" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="955a338efbc7a569a5346358472565c2" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/plain</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-title">OK</span>
+</code></pre></li></ul></section><section id="platforms-specific-platform-by-platform-id-delete" class="panel panel-danger"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">delete a platform</span></div><div style="float:left"><a href="#platforms-specific-platform-by-platform-id-delete" class="btn btn-xs btn-danger">DELETE</a></div><div style="overflow:hidden"><code>/v1/platforms/{PLATFORM}</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>PLATFORM</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>windowsPhone</span></span><p>The platform name</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#763a49a0e50d268a61040037742f71f9" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="763a49a0e50d268a61040037742f71f9" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#365a03b9b8d29fa6d5b96464e5113aea" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="365a03b9b8d29fa6d5b96464e5113aea" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/plain</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-title">OK</span>
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="feeds">Feeds&nbsp;<a href="#feeds"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="feeds-list-all">List all&nbsp;<a href="#feeds-list-all"><i class="fa fa-link"></i></a></h4><section id="feeds-list-all-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">retrieve all feeds</span></div><div style="float:left"><a href="#feeds-list-all-get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/v1/feeds</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#94dca330776d48a9e8d9e52c4316fc48" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="94dca330776d48a9e8d9e52c4316fc48" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#f288e1a48d3f3bedfabbfd087f335ce2" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="f288e1a48d3f3bedfabbfd087f335ce2" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre><h5>Body</h5><pre><code>        [
+            {
+                "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"agenda"</span>
+            </span>},
+            {
+                "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"animals"</span>
+            </span>},
+            {
+                "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"news"</span>
+            </span>}
+        ]
+</code></pre></li></ul></section><h4 id="feeds-specific-feed-by-feed-id">specific feed by FEED ID&nbsp;<a href="#feeds-specific-feed-by-feed-id"><i class="fa fa-link"></i></a></h4><section id="feeds-specific-feed-by-feed-id-put" class="panel panel-warning"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">create a new feed</span></div><div style="float:left"><a href="#feeds-specific-feed-by-feed-id-put" class="btn btn-xs btn-warning">PUT</a></div><div style="overflow:hidden"><code>/v1/feeds/{FEED}</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>FEED</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>animations</span></span><p>The feed name</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#cf1bc801292429f23cdb3808bf1c50a5" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="cf1bc801292429f23cdb3808bf1c50a5" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#36ad87850dd3cae0885b6fba4a7ebcd3" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="36ad87850dd3cae0885b6fba4a7ebcd3" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/plain</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-title">OK</span>
+</code></pre></li></ul></section><section id="feeds-specific-feed-by-feed-id-delete" class="panel panel-danger"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">delete a feed</span></div><div style="float:left"><a href="#feeds-specific-feed-by-feed-id-delete" class="btn btn-xs btn-danger">DELETE</a></div><div style="overflow:hidden"><code>/v1/feeds/{FEED}</code></div></div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>FEED</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>animations</span></span><p>The feed name</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#156e45c15918a3de08989fd194428829" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="156e45c15918a3de08989fd194428829" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#e81aa497ef97c936eab234ab736a7ae9" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="e81aa497ef97c936eab234ab736a7ae9" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/plain</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-title">OK</span>
+</code></pre></li></ul></section></div></div></div><div><div class="panel panel-default"><div class="panel-heading"><h3 id="messages">Messages&nbsp;<a href="#messages"><i class="fa fa-link"></i></a></h3></div><div class="panel-body"><h4 id="messages-list-all">List all&nbsp;<a href="#messages-list-all"><i class="fa fa-link"></i></a></h4><section id="messages-list-all-get" class="panel panel-info"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">retrieve all messages scheduled</span></div><div style="float:left"><a href="#messages-list-all-get" class="btn btn-xs btn-primary">GET</a></div><div style="overflow:hidden"><code>/v1/messages</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#fd167b2f2bc1431b0f5ae76b55711148" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="fd167b2f2bc1431b0f5ae76b55711148" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#ffec69932bc6a6ab0d55ffbcb254f91e" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="ffec69932bc6a6ab0d55ffbcb254f91e" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span><br></code></pre></li></ul></section><section id="messages-list-all-put" class="panel panel-warning"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">send a message to all active users</span></div><div style="float:left"><a href="#messages-list-all-put" class="btn btn-xs btn-warning">PUT</a></div><div style="overflow:hidden"><code>/v1/messages</code></div></div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#351027094a1b1dcac1a42b639d0d01a4" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="351027094a1b1dcac1a42b639d0d01a4" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre><h5>Body</h5><pre><code>        {
+            "<span class="hljs-attribute">text</span>" : <span class="hljs-value"><span class="hljs-string">"message to send"</span>    
+        </span>}
+</code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#166961a70f40dbc8e9316db80795e3e6" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="166961a70f40dbc8e9316db80795e3e6" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/plain</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-title">OK</span>
+</code></pre></li></ul></section><section id="messages-list-all-post" class="panel panel-success"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">check stored messages</span></div><div style="float:left"><a href="#messages-list-all-post" class="btn btn-xs btn-success">POST</a></div><div style="overflow:hidden"><code>/v1/messages</code></div></div><div class="panel-body"><p>if date equal today, send message and delete from database</p>
+</div><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#4c353489c6d71a6e802fe6f82a65cbd6" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="4c353489c6d71a6e802fe6f82a65cbd6" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#620991417f39ce5247205d097ebcefa6" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="620991417f39ce5247205d097ebcefa6" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/plain</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-title">OK</span>
+</code></pre></li></ul></section><h4 id="messages-specific-feed-by-feed-id">specific feed by FEED ID&nbsp;<a href="#messages-specific-feed-by-feed-id"><i class="fa fa-link"></i></a></h4><section id="messages-specific-feed-by-feed-id-put" class="panel panel-warning"><div class="panel-heading"><div style="float:right"><span style="text-transform: lowercase">send a message</span></div><div style="float:left"><a href="#messages-specific-feed-by-feed-id-put" class="btn btn-xs btn-warning">PUT</a></div><div style="overflow:hidden"><code>/v1/feeds/{FEED}/{DATE}</code></div></div><div class="panel-body"><p>if date exist and is in the future, the message is stored and send at this date.</p>
+</div><ul class="list-group"><li class="list-group-item bg-default"><strong>Parameters</strong></li><li class="list-group-item"><dl class="dl-horizontal"><dt>FEED</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>animations</span></span><p>Only send the message to users who activated this feed name</p>
+</dd><dt>DATE</dt><dd><code></code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>2014</span></span><p>05-27 (required, string) - date for schedule message</p>
+</dd></dl></li></ul><ul class="list-group"><li class="list-group-item"><strong>Request</strong><a data-toggle="collapse" data-target="#836c3f95f6eab052c4e015aae7deb7d7" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="836c3f95f6eab052c4e015aae7deb7d7" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br></code></pre></li><li class="list-group-item"><strong>Response&nbsp;&nbsp;<code>200</code></strong><a data-toggle="collapse" data-target="#38ccf1d45f791f63d91975770e02e6c9" class="pull-right collapsed"><span class="closed">Show</span><span class="open">Hide</span></a></li><li id="38ccf1d45f791f63d91975770e02e6c9" class="list-group-item panel-collapse collapse"><h5>Headers</h5><pre><code><span class="hljs-attribute">Authorization</span>: <span class="hljs-string">Basic key=[SECURITY KEY]</span><br><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">text/plain</span><br></code></pre><h5>Body</h5><pre><code><span class="hljs-title">OK</span>
+</code></pre></li></ul></section></div></div></div></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 18 Jun 2015</p><div id="localFile" style="display: none; position: absolute; top: 0; left: 0; width: 100%; color: white; background: red; font-size: 150%; text-align: center; padding: 1em;">This page may not display correctly when opened as a local file. Instead, view it from a web server.
+
+</div></body><script src="//code.jquery.com/jquery-1.11.0.min.js"></script><script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script>(function() {
+  if (location.protocol === 'file:') {
+    document.getElementById('localFile').style.display = 'block';
+  }
+
+}).call(this);
+</script><script>(function() {
+  $('table').addClass('table');
+
+}).call(this);
+</script></html>

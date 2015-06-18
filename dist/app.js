@@ -13,6 +13,6 @@ var app  = express();
 
 require('./db')(config);
 require('./server')(app, config);
-require('./roads')(app);
+require('./routes')(app);
 
 module.exports = app;

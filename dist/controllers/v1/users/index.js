@@ -5,7 +5,7 @@ var express = require('express')
    ,router = express.Router()
 ;
 
-router.put('/:ID/:PLATFORM', controller.createUser);
+router.put('/', controller.createUser);
 router.get('/', controller.getAll);
 router.get('/:ID', controller.getUser);
 router.delete('/:ID', controller.deleteUser);

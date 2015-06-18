@@ -10,10 +10,16 @@ var requireHelper = require('../require_helper')
 
 describe('Users : controllers', function () {
 
-  it('PUT /users/{ID}/{PLATFORM} : should create a user stored on database', function(done) {
+  it('PUT /users : should create a user stored on database', function(done) {
     request(app)
-    .put('/v1/users/AZ34RT5Y/IOS')
+    .put('/v1/users')
     .set('authorization', 'Basic key:' + config.security)
+    .send({ 
+      user: {
+        id : 'AZ34RT5Y',
+        platform : 'IOS'
+      }
+    })
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
@@ -24,10 +30,16 @@ describe('Users : controllers', function () {
     })
   }); 
 
-  it('PUT /users/{ID}/{PLATFORM} : should create a user already exist on database', function(done) {
+  it('PUT /users : should create a user already exist on database', function(done) {
     request(app)
-    .put('/v1/users/T6Y890OK/IOS')
+    .put('/v1/users')
     .set('authorization', 'Basic key:' + config.security)
+    .send({ 
+      user: {
+        id : 'T6Y890OK',
+        platform : 'IOS'
+      }
+    })
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);

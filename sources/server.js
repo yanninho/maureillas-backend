@@ -24,24 +24,10 @@ module.exports = function(app, config) {
 				res.statusCode = 204;
 				return res.end();
 			}
-			// Authorization
-		    if (req.headers.authorization && req.headers.authorization.search('Basic ') === 0) {
-		        // fetch key
-		        if (req.headers.authorization.split(' ')[1] == 'key:'+ config.security) {
-		            return next();
-		        }
-		    }
-		    console.log('Unable to authenticate');
-		    console.log(req.headers.authorization);
-		    res.header('WWW-Authenticate', 'Basic realm="Protected Service"');
-		    if (req.headers.authorization) {
-		        setTimeout(function () {
-		            res.send('Authentication required', 401);
-		        }, 5000);
-		    } else {
-		        res.send('Authentication required', 401);
-		    }
+			return next();
 		});
+
+		app.use(express.static(__dirname + '/public'));
 
 		app.listen(config.port, function callback(){
 			console.log('Server started on port : ' + config.port);

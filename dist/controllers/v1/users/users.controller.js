@@ -3,13 +3,15 @@
 var userService = require('../../../services/users.service');
 
 exports.createUser = function(req, res) {
-    var id = req.params.ID;
-    var platform = req.params.PLATFORM;
+    var userReq = req.body.user;
+    if (!userReq) return res.send(400, 'Invalid request, missing PUT parameter user');
+    if (!userReq.id) return res.send(400, 'Invalid request, missing PUT parameter user ID');
+    if (!userReq.platform) return res.send(400, 'Invalid request, missing PUT parameter user PLATFORM');
     
-    userService.findById(id, function(err, user) {
+    userService.findById(userReq.id, function(err, user) {
       if (err) return res.send(500, err.message);
       if (user) return res.json(user);
-        userService.create(id, platform, function (err, createdUser) {
+        userService.create(userReq.id, userReq.platform, function (err, createdUser) {
              try {
                 if (err) return res.send(500, err.message);
                 if (!createdUser) return res.send(500, 'Error : Unable to create user');               
