@@ -5,13 +5,12 @@ var gcm = require('node-gcm')
   , sender = new gcm.Sender(config.gcm.api_key);
 
 exports.sendMessage = function(registration_ids, message,callback) {
-	console.log('######################');
-	console.log(registration_ids);
+
 	if (registration_ids === null) {
 		callback('the first parameter must contains an array of registration ids');
 	}
 	if (registration_ids.length === 0) {
-		callback('the first parameter must contains an array with at most a registration id');
+		callback('No user to send');
 	};
 
 	if (message === null) {

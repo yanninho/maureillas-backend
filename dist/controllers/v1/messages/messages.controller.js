@@ -26,7 +26,7 @@ exports.sendMessages = function(req, res) {
 
     googleSend(feed, function(err, result) {
 			var results = {
-				google : result
+				google : result || {}
 			}
 			if (err) {
 				results.google.errors = err;				
