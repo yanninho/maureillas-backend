@@ -16,7 +16,7 @@ exports.findByDate = function(date, callback) {
 
 exports.create = function(feed, date, callback) {
   if (!feed || !date) {
-    throw new Error('Invalid parameters');
+    callback('Invalid parameters');
   }
   var newMessage = {
     feed : feed,

@@ -73,14 +73,9 @@ exports.scheduleMessages = function(req, res) {
 		return res.send(400, 'Invalid parameter format, expected YYYY-MM-dd');
 	}	
 	messageService.create(feed, new Date(date), function(err, createdMessage) {
-         try {
             if (err) return res.send(500, err.message);
             if (!createdMessage) return res.send(500, 'Error : Unable to schedule message');
             return res.send(200);
-         }
-         catch(err) {
-            return res.send(500, err.message);
-         }
 	});
 }
 
