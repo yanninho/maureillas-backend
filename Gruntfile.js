@@ -51,7 +51,7 @@ module.exports = function (grunt) {
                 ]
             },
             coverage: {
-              src: ['coverage/']
+              src: ['test/coverage/']
             }
         },
         // configure tasks by environnement
