@@ -106,17 +106,17 @@ describe('Users: services', function () {
 
 	 describe('#findbyPlatformFeedName()', function () {
 	   it('should find all users actives by platform and suscriber feed', function (done) {
-	     userService.findbyPlatformFeedName('IOS', 'feed fake', function (err, users) {
+	     userService.findbyPlatformFeedName('IOS', ['feed fake', 'feed fake 2'], function (err, users) {
 	       // Confirm that that an error does not exist
 	       should.not.exist(err);
 	       // verify one result
-	       users.should.have.length(1);
+	       users.should.have.length(2);
 	       var user = users[0];
 	       // verify that the returned user is what we expect
 	       user._id.should.equal('Azsqer54Y');
 	       user.platform.should.equal('IOS');
 	       user.active.should.equal(true);
-	       user.feeds.should.have.length(1);
+	       user.feeds.should.have.length(2);
 	       // Call done to tell mocha that we are done with this test
 	       done();
 	     });
@@ -134,7 +134,7 @@ describe('Users: services', function () {
 	       user._id.should.equal('Azsqer54Y');
 	       user.platform.should.equal('IOS');
 	       user.active.should.equal(true);
-	       user.feeds.should.have.length(1);
+	       user.feeds.should.have.length(2);
 	       // Call done to tell mocha that we are done with this test
 	       done();
 	     });

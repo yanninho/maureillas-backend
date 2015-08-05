@@ -5,7 +5,7 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://mongo-maureillas/maureillas-tests'
+    uri: 'mongodb://localhost/maureillas-tests'
   },
   gcm: {
   	api_key: 'AIzaSyAUZ2Su27gtaJdtifsdg8I0rIp_3GMq95Q',

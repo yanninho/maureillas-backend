@@ -45,11 +45,12 @@ exports.create = function(id, platform, callback) {
 }
 
 exports.findbyPlatformFeedName = function (platformName, feedName, callback) {
+
   userModel.find(
   {
     "platform": platformName, 
     "active": true,
-    "feeds.name" : feedName,
+    "feeds.name" : { $in : feedName},
     "feeds.suscriber" : true             
   }
   ,callback);        

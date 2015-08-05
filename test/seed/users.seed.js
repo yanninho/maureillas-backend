@@ -13,6 +13,10 @@ exports.seed = function() {
 			{
 				name : 'feed fake',
 				suscriber : true
+			},
+			{
+				name : 'feed fake 2',
+				suscriber : false
 			}
 			]
 		},
@@ -23,6 +27,10 @@ exports.seed = function() {
 			feeds : [
 			{
 				name : 'feed fake',
+				suscriber : false
+			},
+			{
+				name : 'feed fake 2',
 				suscriber : false
 			}
 			]
@@ -43,10 +51,15 @@ exports.seed = function() {
 			platform  : 'IOS',
 			active : true,
 			feeds : [
-			{
-				name : 'feed fake',
-				suscriber : false
-			}
+				{
+					name : 'feed fake',
+					suscriber : false
+				},
+				{
+					name : 'feed fake 2',
+					suscriber : true
+				}
+
 			]
 		}
 ,

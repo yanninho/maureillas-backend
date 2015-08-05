@@ -5,8 +5,8 @@ var userService = require('../../../services/users.service')
   , messageService = require('../../../services/messages.service')
 ;
 
-var googleSend = function(feed, callback) {
-	userService.findbyPlatformFeedName('GOOGLE', feed, function(err, users) {	
+var googleSend = function(feeds, callback) {
+	userService.findbyPlatformFeedName('GOOGLE', feeds, function(err, users) {	
 		if (err) return;
 		if (!users) return;
 
@@ -14,17 +14,17 @@ var googleSend = function(feed, callback) {
 		users.forEach(function(user) {
 			registration_ids.push(user._id);
 		})		
-		gcmService.sendMessage(registration_ids, 'Un nouvel article est disponible dans la catégorie : ' + feed, callback);
+		gcmService.sendMessage(registration_ids, 'Nouvel article disponible!', callback);
 	});	
 }
  
 exports.sendMessages = function(req, res) {
-	var feed = req.params.FEED;
+	var feeds = req.params.FEED.split(',');
     var results = {};
     var nbIos = 0;
     var errors = [];
 
-    googleSend(feed, function(err, result) {
+    googleSend(feeds, function(err, result) {
 			var results = {
 				google : result
 			}
@@ -34,7 +34,7 @@ exports.sendMessages = function(req, res) {
 			return res.json(results);
 	});
 }
- 
+
 exports.sendCustomMessages = function(req, res) {
 	var text = req.body.text;
 	if (!text) {
@@ -89,7 +89,7 @@ exports.checkMessages = function(req, res) {
 		if (err) res.send(500, err.message);
 		if (messages.length > 0) {
 			messages.forEach(function(message){
-			    googleSend(message.feed, function(err, result) {
+			    googleSend([message.feed], function(err, result) {
 						var results = {
 							google : result
 						}
