@@ -23,7 +23,7 @@ var googleSend = function(feeds, callback) {
 			   		registration_ids.push(user._id);
 			   }			  
 			});				
-			gcmService.sendMessage(registration_ids, '['+ feed +'] Nouvel article disponible!', feed, callback);			
+			gcmService.sendMessage(registration_ids, 'Nouvel article disponible!', feed, callback);			
 		});
 	});	
 }
