@@ -5,7 +5,7 @@ var feedModel = require('../models/feeds')
 
 exports.create = function (feedName, callback) {
   if (!feedName) {
-    throw new Error('Invalide parameter');
+    callback('Invalide parameter');
   }	
   var newFeed = {
   	"name" : feedName
@@ -18,7 +18,7 @@ exports.delete = function (feedName, callback) {
   	"name" : feedName
   },
   function(err, feed) {
-    if (err || !feed) throw new Error('Feed not found');
+    if (err || !feed) callback('Feed not found');
     feedModel.remove(feed, callback);
   })
 }

@@ -13,15 +13,15 @@ exports.create = function(id, platform, callback) {
         throw new Error(err);
       }
       if (!platformResult) {
-        throw new Error('Platform not found');
+        callback('Platform not found');
       }    
 
       feedService.findAll(function(err, feedsResult) {
         if (err) {
-          throw new Error(err);          
+          callback(err);          
         }
         if( !feedsResult || !Array.isArray(feedsResult) ) {
-          throw new Error('Error get list feeds');
+          callback('Error get list feeds');
         }
         var newFeeds = [];
         feedsResult.forEach(function(feed) {
@@ -72,7 +72,7 @@ exports.addFeed = function(feed, callback) {
 
 exports.updateFeeds = function(userId, newFeeds, callback) {
   userModel.findById(userId, function(err, user) {
-    if (err || !user) throw new Error('User not found');
+    if (err || !user) callback('User not found');
     user.feeds = newFeeds;   
     user.save(callback);
   })
@@ -95,7 +95,7 @@ exports.findById = function(id, callback) {
 
 exports.delete = function(userId, callback) {
   userModel.findById(userId, function(err, user) {
-    if (err || !user) throw new Error('User not found');
+    if (err || !user) callback('User not found');
     userModel.remove(user, callback);
   })  
 }

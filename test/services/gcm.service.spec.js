@@ -4,8 +4,7 @@ var requireHelper = require('../require_helper')
   , should   = require('chai').should()
   , gcm = requireHelper('services/gcm.service')
   , config = requireHelper('config/environment')
-  , tests_devices = config.gcm.tests_devices.android
-;
+  , tests_devices = config.gcm.tests_devices.android;
 	
 describe('Gcm: services', function () {
 	 describe('#sendMessage()', function () {
@@ -21,40 +20,23 @@ describe('Gcm: services', function () {
 				});	   		
 	   });
 	   it('should throw an exception because registration_ids is null', function (done) {
-	   		try {
 		     	gcm.sendMessage(
 		     		 null,
 		     		 null,
 		     		function (err, result) {
-		    			should(null).not.be.ok;
-		    			done();
+		    			should.exist(err);
+		    			
 				});
-				should(null).not.be.ok;
-				done();
-	   		}
-	   		catch(error) {
-	   			var message = error.message;
-	   			message.should.equals('the first parameter must contains an array of registration ids');
-	   			done();
-	   		}   		
+				done();  		
 	   });
 	   it('should throw an exception because message is null', function (done) {
-	   		try {
 		     	gcm.sendMessage(
 		     		 tests_devices,
 		     		 null,
 		     		function (err, result) {
-		    			should(null).not.be.ok;
-		    			done();
+		    			should.exist(err);
 				});
-				should(null).not.be.ok;
-				done();
-	   		}
-	   		catch(error) {
-	   			var message = error.message;
-	   			message.should.equals('the second parameter must contains a message to send');
-	   			done();
-	   		}   		
+				done();  		
 	   });
 	 });
 
