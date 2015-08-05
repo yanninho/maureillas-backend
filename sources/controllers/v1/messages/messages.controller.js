@@ -3,6 +3,7 @@
 var userService = require('../../../services/users.service')
   , gcmService = require('../../../services/gcm.service')
   , messageService = require('../../../services/messages.service')
+  , _ = require('underscore')
 ;
 
 var googleSend = function(feeds, callback) {
@@ -10,11 +11,20 @@ var googleSend = function(feeds, callback) {
 		if (err) return;
 		if (!users) return;
 
-		var registration_ids = [];
-		users.forEach(function(user) {
-			registration_ids.push(user._id);
-		})		
-		gcmService.sendMessage(registration_ids, 'Nouvel article disponible!', callback);
+		var alreadySendArray = [];
+
+		feeds.forEach(function(feed) {	
+			var registration_ids = [];		
+			_.filter(users, function(user){
+			   var alreadySend = _.contains(alreadySendArray, user._id);
+			   var isFeedActive = _.findWhere(user.feeds, { name : feed, suscriber : true }); 
+			   if (!alreadySend && isFeedActive !== undefined) {
+			   		alreadySendArray.push(user._id);
+			   		registration_ids.push(user._id);
+			   }			  
+			});				
+			gcmService.sendMessage(registration_ids, '['+ feed +'] Nouvel article disponible!', feed, callback);			
+		});
 	});	
 }
  
@@ -52,7 +62,7 @@ exports.sendCustomMessages = function(req, res) {
 		users.forEach(function(user) {
 			registration_ids.push(user._id);
 		})		
-		gcmService.sendMessage(registration_ids, text, function(err, result) {
+		gcmService.sendMessage(registration_ids, text, 'main', function(err, result) {
 			var results = {
 				google : result
 			}

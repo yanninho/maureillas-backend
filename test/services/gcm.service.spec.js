@@ -12,6 +12,7 @@ describe('Gcm: services', function () {
 	     	gcm.sendMessage(
 	     		 tests_devices,
 	     		 'Test GCM Maureillas Application',
+	     		 'main',
 	     		function (err, result) {
 	    			should.not.exist(err);
 	    			result.success.should.equal(tests_devices.length);	    			
@@ -21,6 +22,7 @@ describe('Gcm: services', function () {
 	   });
 	   it('should throw an exception because registration_ids is null', function (done) {
 		     	gcm.sendMessage(
+		     		 null,
 		     		 null,
 		     		 null,
 		     		function (err, result) {
@@ -33,6 +35,7 @@ describe('Gcm: services', function () {
 		     	gcm.sendMessage(
 		     		 tests_devices,
 		     		 null,
+		     		 'main',
 		     		function (err, result) {
 		    			should.exist(err);
 				});
