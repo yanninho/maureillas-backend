@@ -1,0 +1,5 @@
+openssl req -nodes -newkey rsa:2048 -keyout private_key.key -out cer_sign_request.csr
+openssl x509 -in cert.cer -inform DER -outform PEM -out cert.pem
+openssl pkcs12 -export -inkey key.key -in cert.pem -out key.p12
+openssl pkcs12 -in key.p12 -out key.pem -nodes
+openssl s_client -connect gateway.push.apple.com:2195 -cert cert.pem -key key.pem -CAfile entrust_2048_ca.cer

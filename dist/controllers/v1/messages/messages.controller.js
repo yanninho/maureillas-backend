@@ -2,12 +2,14 @@
 
 var userService = require('../../../services/users.service')
   , gcmService = require('../../../services/gcm.service')
+  , apnService = require('../../../services/apn.service')
   , messageService = require('../../../services/messages.service')
   , _ = require('underscore')
+  , async = require('async')
 ;
 
-var googleSend = function(feeds, callback) {
-	userService.findbyPlatformFeedName('GOOGLE', feeds, function(err, users) {	
+var serviceSend = function(feeds, platformName, service, callback) {
+	userService.findbyPlatformFeedName(platformName, feeds, function(err, users) {	
 		if (err) return;
 		if (!users) return;
 
@@ -23,7 +25,7 @@ var googleSend = function(feeds, callback) {
 			   		registration_ids.push(user._id);
 			   }			  
 			});				
-			gcmService.sendMessage(registration_ids, 'Nouvel article disponible!', feed, callback);			
+			service.sendMessage(registration_ids, '['+ feed +'] Nouvel article disponible!', feed, callback);			
 		});
 	});	
 }
@@ -31,18 +33,38 @@ var googleSend = function(feeds, callback) {
 exports.sendMessages = function(req, res) {
 	var feeds = req.params.FEED.split(',');
     var results = {};
-    var nbIos = 0;
     var errors = [];
 
-    googleSend(feeds, function(err, result) {
-			var results = {
-				google : result || {}
-			}
-			if (err) {
-				results.google.errors = err;				
-			}
-			return res.json(results);
-	});
+    async.parallel([
+    		//GOOGLE
+    		function(callback) {
+			    serviceSend(feeds, 'GOOGLE', gcmService, function(err, result) {
+						results['google'] = result || {};						
+						if (err) {
+							results.google.errors = err;				
+						}
+						callback();						
+				});
+    		},
+    		//IOS
+    		function(callback) {
+			    serviceSend(feeds, 'IOS', apnService, function(err, result) {
+						results['ios'] = result || {};
+						if (err) {
+							results.ios.errors = err;				
+						}
+						callback();						
+				});
+
+    		}
+    	], 
+    	function(err) {
+				if (err) {
+					return res.json(err);
+				}
+    			return res.json(results);
+    	}
+    );
 }
 
 exports.sendCustomMessages = function(req, res) {
@@ -51,7 +73,6 @@ exports.sendCustomMessages = function(req, res) {
 		return res.send(400, 'The request must contain a text parameter');
 	}
     var results = {};
-    var nbIos = 0;
     var errors = [];
 
     userService.findActive(function(err, users) {
@@ -62,15 +83,34 @@ exports.sendCustomMessages = function(req, res) {
 		users.forEach(function(user) {
 			registration_ids.push(user._id);
 		})		
-		gcmService.sendMessage(registration_ids, text, 'main', function(err, result) {
-			var results = {
-				google : result
+
+		async.parallel([
+				function(callback) {
+					gcmService.sendMessage(registration_ids, text, 'main', function(err, result) {
+						results['google'] = result;						
+						if (err) {
+							results.google.errors = err;				
+						}
+						callback();
+					});
+				},
+				function(callback) {
+					apnService.sendMessage(registration_ids, text, 'main', function(err, result) {
+						results['ios'] = result;
+						if (err) {
+							results.ios.errors = err;				
+						}
+						callback();
+					});  
+				},
+			],			
+			function(err) {
+				if (err) {
+					return res.json(err);
+				}
+				return res.json(results);
 			}
-			if (err) {
-				results.google.errors = err;				
-			}
-			return res.json(results);
-		});    	
+		);  	
   	});
 
 }
@@ -93,20 +133,45 @@ exports.checkMessages = function(req, res) {
 	messageService.findByDate(new Date(), function(err, messages) {
 		if (err) res.send(500, err.message);
 		if (messages.length > 0) {
+			var results = {};
 			messages.forEach(function(message){
-			    googleSend([message.feed], function(err, result) {
-						var results = {
-							google : result
+
+				async.parallel([
+						function(callback) {
+						    serviceSend([message.feed],'GOOGLE', gcmService, function(err, result) {
+									results['google'] = result;
+									if (err) {
+										results.google.errors = err;				
+									}
+									messageService.delete(new Date(), function(err) {
+										results.google.errors = err;
+										callback();										
+									});							
+							});	
+						},
+						function(callback) {
+						    serviceSend([message.feed],'IOS', apnService, function(err, result) {
+									results['ios'] = result;
+									if (err) {
+										results.ios.errors = err;				
+									}
+									messageService.delete(new Date(), function(err) {
+										results.ios.errors = err;
+										callback();										
+									});							
+							});	
 						}
+					],
+					function(err) {
 						if (err) {
-							results.google.errors = err;				
+							return res.json(err);
 						}
-						messageService.delete(new Date(), function(err) {
-							if (err) return res.send(500, err.message);
-							return res.json(results);
-						});							
-				});				
-			})
+						return res.json(results);
+					}
+				);
+
+			
+			});
 		}
 		else {
 			return res.send(200);

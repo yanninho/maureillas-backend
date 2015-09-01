@@ -21,5 +21,8 @@ module.exports = {
   gcm: {
     api_key: process.env.GCM_API_KEY
   },
+  apn: {
+    app_id: process.env.APN_APP_ID
+  },  
   security : process.env.SECURITY_ACCESS  
 };
