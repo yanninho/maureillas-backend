@@ -5,20 +5,23 @@ var gcm = require('node-gcm')
   , sender = new gcm.Sender(config.gcm.api_key);
 
 exports.sendMessage = function(registration_ids, message, feed, callback) {
-
+console.log('GCm 1');
 	if (registration_ids === null) {
 		callback('the first parameter must contains an array of registration ids');
 		return;
 	}
+console.log('GCm 2');
 	if (registration_ids.length === 0) {
 		callback('No user to send');
 		return;
 	};
+console.log('GCm 3');
 
 	if (message === null) {
 		callback('the second parameter must contains a message to send');
 		return;
 	}
+console.log('GCm 4');
 
 	var configMessage = {
 		data : {
@@ -27,6 +30,7 @@ exports.sendMessage = function(registration_ids, message, feed, callback) {
 			category : feed
 		}
 	}
+console.log('GCm 5');
 
 	var message = new gcm.Message(configMessage);
 	sender.send(message, registration_ids, callback);

@@ -14,6 +14,8 @@ var serviceSend = function(feeds, platformName, service, callback) {
 	console.log('##############');
 	userService.findbyPlatformFeedName(platformName, feeds, function(err, users) {	
 		if (err) return;
+		console.log('nb user : ' + users.length);
+		console.log('nb feeds : ' + feeds.length);
 		if (!users) return;
 
 		var alreadySendArray = [];
@@ -27,7 +29,8 @@ var serviceSend = function(feeds, platformName, service, callback) {
 			   		alreadySendArray.push(user._id);
 			   		registration_ids.push(user._id);
 			   }			  
-			});				
+			});		
+			console.log('nb registered : '  + registration_ids.length);		
 			service.sendMessage(registration_ids, '['+ feed +'] Nouvel article disponible!', feed, callback);			
 		});
 	});	
@@ -62,6 +65,10 @@ exports.sendMessages = function(req, res) {
     		}
     	], 
     	function(err) {
+    		console.log('[[[[[[[[[[[[[[[[');
+    		console.log(err);
+    		console.log(results);
+    		console.log(']]]]]]]]]]]]]]]]');
 				if (err) {
 					return res.json(err);
 				}
