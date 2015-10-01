@@ -9,6 +9,9 @@ var userService = require('../../../services/users.service')
 ;
 
 var serviceSend = function(feeds, platformName, service, callback) {
+	console.log('##############');
+	console.log(platformName);
+	console.log('##############');
 	userService.findbyPlatformFeedName(platformName, feeds, function(err, users) {	
 		if (err) return;
 		if (!users) return;

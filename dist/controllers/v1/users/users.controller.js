@@ -66,3 +66,10 @@ exports.deleteUser = function(req, res) {
         return res.send(200);
      });
 };
+
+exports.deleteAllUser = function(req, res) {
+     userService.delete(function(err) {
+        if (err) return res.send(500, err.message);
+        return res.send(200);
+     });
+};
