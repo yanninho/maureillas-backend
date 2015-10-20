@@ -8,9 +8,9 @@ module.exports = {
     uri: 'mongodb://localhost/maureillas'
   },
   gcm: {
-    api_key: 'AIzaSyAUZ2Su27gtaJdtifsdg8I0rIp_3GMq95Q',
+    api_key: 'AIzaSyClUEmF927usWy1gAJskq4msdEcX0p5SZM',
     tests_devices: {
-      android : ['APA91bFhAvNWQCNPdVHP6vOyv_IdQ4FBKeYe0VEUeXUeYjFqxwuDLKfWnNWPGVmHvNeW-0HWw68LW0vaO6CATGWkYVwuZgQ58BJGXxG3ikn1TpPNLXw6O2KDygsxbNOYyVelS5aXQB5gfisMa0yNOspSML4xFxupGA']
+      android : ['APA91bHO1Sep-fF9UeIARAo8zmArttAsi3kp90TTwjajXW7EZhDGVBz1zdGAu876EsvQrW8KucP7M36K9w4yqLWX0p0tak87-OM0SagcsbqLWW_dd9B4ROc']
     }
   },
   apn: {

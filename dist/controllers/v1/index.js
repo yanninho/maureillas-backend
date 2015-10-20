@@ -12,8 +12,6 @@ var express = require('express')
 		        	return next();
 		        }
 		    }
-		    console.log('Unable to authenticate');
-		    console.log(req.headers.authorization);
 		    res.header('WWW-Authenticate', 'Basic realm="Protected Service"');
 		    if (req.headers.authorization) {
 		    	setTimeout(function () {

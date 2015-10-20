@@ -1,123 +1,86 @@
 'use strict';
 
-var userService = require('../../../services/users.service')
-  , gcmService = require('../../../services/gcm.service')
-  , apnService = require('../../../services/apn.service')
-  , messageService = require('../../../services/messages.service')
-  , _ = require('underscore')
-  , async = require('async')
-;
+var userService = require('../../../services/users.service'),
+  gcmService = require('../../../services/gcm.service'),
+  apnService = require('../../../services/apn.service'),
+  messageService = require('../../../services/messages.service'),
+  _ = require('underscore'),
+  async = require('async');
 
-var serviceSend = function(feeds, platformName, service, callback) {
-	userService.findbyPlatformFeedName(platformName, feeds, function(err, users) {	
-		if (err) return;
-		if (!users) return;
+var platforms = [{
+	name: 'GOOGLE',
+	service: gcmService
+},{
+	name: 'IOS',
+	service: apnService
+}];
 
-		var alreadySendArray = [];
-
-		feeds.forEach(function(feed) {	
-			var registration_ids = [];		
-			_.filter(users, function(user){
-			   var alreadySend = _.contains(alreadySendArray, user._id);
-			   var isFeedActive = _.findWhere(user.feeds, { name : feed, suscriber : true }); 
-			   if (!alreadySend && isFeedActive !== undefined) {
-			   		alreadySendArray.push(user._id);
-			   		registration_ids.push(user._id);
-			   }			  
-			});				
-			service.sendMessage(registration_ids, '['+ feed +'] Nouvel article disponible!', feed, callback);			
-		});
-	});	
-}
- 
 exports.sendMessages = function(req, res) {
-	var feeds = req.params.FEED.split(',');
-    var results = {};
-    var errors = [];
-
-    async.parallel([
-    		//GOOGLE
-    		function(callback) {
-			    serviceSend(feeds, 'GOOGLE', gcmService, function(err, result) {
-						results['google'] = result || {};						
-						if (err) {
-							results.google.errors = err;				
-						}
-						callback();						
+	// 1- getFeed
+	var feed = req.params.FEED;
+	// 2- getMessage
+	var message = '['+ feed +'] Nouvel article disponible!';
+	// 3- for each Platforms (parallel)
+	async.each(platforms, function(platform, callback){
+		async.waterfall([ // process for each platform
+			//4- getUsers
+			function(callback) {
+				userService.findbyPlatformFeedName(platform.name, [feed], function(err, users) {
+					if (err) return callback(err, null);
+					if (users.length === 0) return callback('no users for ' + platform.name, null);
+					callback(null, users);
 				});
-    		},
-    		//IOS
-    		function(callback) {
-			    serviceSend(feeds, 'IOS', apnService, function(err, result) {
-						results['ios'] = result || {};
-						if (err) {
-							results.ios.errors = err;				
-						}
-						callback();						
-				});
-
-    		}
-    	], 
-    	function() {
-    		console.log('finish OK');
-    		return res.json(results);
-    	},
-    	function(err) {
-				if (err) {
-					return res.json(err);
-				}
-    			return res.json(results);
-    	}
-    );
-}
+			}, 
+			//5- sendMessage
+			function(users, callback) {
+				platform.service.sendMessage(users, message, feed, callback);
+			}], callback);
+	}, 
+	//end all platform
+	function(err, results) {
+		var result = {
+			errors : err, 
+			success: results
+		}
+    	return res.json(result);
+	});
+};
 
 exports.sendCustomMessages = function(req, res) {
 	var text = req.body.text;
 	if (!text) {
 		return res.send(400, 'The request must contain a text parameter');
-	}
-    var results = {};
-    var errors = [];
-
-    userService.findActive(function(err, users) {
-		if (err) return;
-		if (!users) return;
-
-		var registration_ids = [];
-		users.forEach(function(user) {
-			registration_ids.push(user._id);
-		})		
-
-		async.parallel([
-				function(callback) {
-					gcmService.sendMessage(registration_ids, text, 'main', function(err, result) {
-						results['google'] = result;						
-						if (err) {
-							results.google.errors = err;				
-						}
-						callback();
-					});
-				},
-				function(callback) {
-					apnService.sendMessage(registration_ids, text, 'main', function(err, result) {
-						results['ios'] = result;
-						if (err) {
-							results.ios.errors = err;				
-						}
-						callback();
-					});  
-				},
-			],			
-			function(err) {
-				if (err) {
-					return res.json(err);
-				}
-				return res.json(results);
-			}
-		);  	
-  	});
-
-}
+	}    
+	// process serie
+	async.waterfall([
+		//1- find users
+		function(callback) {
+			userService.findActive(function(err, users) {
+				if (err) return callback(err, null);
+				if (users.length === 0) return callback('no users to send ', null);
+				var registration_ids = [];
+				users.forEach(function(user) {
+					registration_ids.push(user._id);
+				});				
+				callback(null, registration_ids);
+			});			
+		},
+		// 2- send message (each platform in paralell) 
+		function(registration_ids, callback) {
+			async.each(platforms, function(platform, callback){
+				platform.service.sendMessage(registration_ids, text, 'main', callback);
+			}, callback);
+		}
+	], 
+	//end process
+	function(err, results) {
+		var result = {
+			errors : err, 
+			success: results
+		}
+    	return res.json(result);
+	});
+};
 
 exports.scheduleMessages = function(req, res) {
 	var feed = req.params.FEED;
@@ -131,54 +94,51 @@ exports.scheduleMessages = function(req, res) {
             if (!createdMessage) return res.send(500, 'Error : Unable to schedule message');
             return res.send(200);
 	});
-}
+};
 
 exports.checkMessages = function(req, res) {
-	messageService.findByDate(new Date(), function(err, messages) {
-		if (err) res.send(500, err.message);
-		if (messages.length > 0) {
-			var results = {};
-			messages.forEach(function(message){
-
-				async.parallel([
-						function(callback) {
-						    serviceSend([message.feed],'GOOGLE', gcmService, function(err, result) {
-									results['google'] = result;
-									if (err) {
-										results.google.errors = err;				
-									}
-									messageService.delete(new Date(), function(err) {
-										results.google.errors = err;
-										callback();										
-									});							
-							});	
-						},
-						function(callback) {
-						    serviceSend([message.feed],'IOS', apnService, function(err, result) {
-									results['ios'] = result;
-									if (err) {
-										results.ios.errors = err;				
-									}
-									messageService.delete(new Date(), function(err) {
-										results.ios.errors = err;
-										callback();										
-									});							
-							});	
-						}
-					],
-					function(err) {
-						if (err) {
-							return res.json(err);
-						}
-						return res.json(results);
+	// process serie
+	async.waterfall([
+		//get messages
+		function(callback) {
+			messageService.findByDate(new Date(), callback);
+		},
+		function(messages, callback) {
+			if (messages === 0) {
+				return callback(null, 'no message to send');
+			}
+			// all messages paralell
+			async.each(messages, function(message, callback) {
+				async.waterfall([
+					function(callback) {
+						// all platform
+						async.each(platforms, function(platform, callback) {
+								async.waterfall([ // process platform
+									//4- getUsers
+									function(callback) {
+										userService.findbyPlatformFeedName(platform.name, [message.feed], callback);
+									}, 
+									//5- sendMessage
+									function(users, callback) {
+										var messageSend = '['+ message.feed +'] Nouvel article disponible!';
+										platform.service.sendMessage(users, messageSend, message.feed, callback);
+									}],callback);
+						}, callback);	
+					},
+					function(callback) {
+						//delete message
+						messageService.delete(new Date(), message.feed, callback);																	
 					}
-				);
+				], callback);			
+			},callback);
 
-			
-			});
 		}
-		else {
-			return res.send(200);
-		}		
-	})
+	], 
+	// end process
+	function(err, result) {
+		if (err) {
+			return res.json(err);
+		}
+		return res.json(result);
+	});
 }

@@ -7,10 +7,10 @@ module.exports = {
   mongo: {
     uri: 'mongodb://localhost/maureillas-tests'
   },
-  gcm: {
-    api_key: 'AIzaSyAUZ2Su27gtaJdtifsdg8I0rIp_3GMq95Q',
+   gcm: {
+    api_key: 'AIzaSyClUEmF927usWy1gAJskq4msdEcX0p5SZM',
     tests_devices: {
-      android : ['APA91bHae5xU90Cu2eKceBtsWcu58sk_PvRarOThsIkXcxD1KZv9BvOGN1wb0cbeo3fhCFbeE20GcENcNKY38PYf2kn8kzh8rm8I89AK6n6OGv4surwrSW0']
+      android : ['APA91bHO1Sep-fF9UeIARAo8zmArttAsi3kp90TTwjajXW7EZhDGVBz1zdGAu876EsvQrW8KucP7M36K9w4yqLWX0p0tak87-OM0SagcsbqLWW_dd9B4ROc']
     }
   },
   apn: {

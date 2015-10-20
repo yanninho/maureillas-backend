@@ -39,20 +39,19 @@ service.on("socketError", console.error);
 exports.sendMessage = function(registration_ids, message, feed, callback) {
 
     if (registration_ids === null) {
-        callback('the first parameter must contains an array of registration ids');
-        return;
+        return callback('the first parameter must contains an array of registration ids', null);
     }
+
     if (registration_ids.length === 0) {
-        callback('No user to send');
+        callback('No user to send', null);
         return;
     }
 
     if (message === null) {
-        callback('the second parameter must contains a message to send');
+        callback('the second parameter must contains a message to send', null);
         return;
     }
 
-    console.log("Sending the same notification each of the devices with one call to pushNotification.");
     var note = new apn.notification();
     note.setAlertTitle('Ville de Maureillas');
     note.setAlertText(message);
@@ -60,4 +59,5 @@ exports.sendMessage = function(registration_ids, message, feed, callback) {
     note.badge = 1;
 
     service.pushNotification(note, registration_ids);
+    callback(null, 'Apn notification transmitted');
 };
