@@ -1,10 +1,10 @@
 'use strict';
 
-var requireHelper = require('../require_helper')
+var requireHelper = require('../../require_helper')
   , app = requireHelper('app')
   , should = require('chai').should()
   , request = require('supertest')
-  , utils = require('../test.utils')  
+  , utils = require('../../test.utils')  
   , config = requireHelper('config/environment')
 ;
 

@@ -1,34 +1,34 @@
 'use strict';
 
-var requireHelper = require('../require_helper')
+var requireHelper = require('../../require_helper')
   , app = requireHelper('app')
   , should = require('chai').should()
   , request = require('supertest')
-  , utils = require('../test.utils')  
+  , utils = require('../../test.utils')  
   , config = requireHelper('config/environment')
 ;
 
-describe('Feeds : controllers', function () {
+describe('Platforms : controllers', function () {
 
-  it('should return list of feeds : GET /feeds', function(done) {
+  it('GET /platforms : should return list of platforms', function(done) {
     request(app)
-    .get('/v1/feeds')
+    .get('/v1/platforms')
     .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
-      var feeds = res.body;
-      should.exist(feeds);
-      feeds.should.have.length(3);
-      should.not.exist(feeds[0]._id);
-      should.exist(feeds[0].name);      
+      var platforms = res.body;
+      should.exist(platforms);
+      platforms.should.have.length(2);
+      should.not.exist(platforms[0]._id);
+      should.exist(platforms[0].name);
       done();
     })
   }); 
 
-  it('should create a feed stored on database : PUT /feeds/{FEED}', function(done) {
+  it('PUT /platforms/{PLATFORM} : should create a platform stored on database', function(done) {
     request(app)
-    .put('/v1/feeds/another')
+    .put('/v1/platforms/windowsPhone')
     .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
@@ -38,9 +38,9 @@ describe('Feeds : controllers', function () {
   }); 
 
 
-  it('should delete a feed from database by name : DELETE /feeds/{FEED}', function(done) {
+  it('DELETE /platforms/{PLATFORM} : should delete a platform from database by name', function(done) {
     request(app)
-    .delete('/v1/feeds/news')
+    .delete('/v1/platforms/IOS')
     .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {

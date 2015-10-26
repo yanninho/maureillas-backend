@@ -1,34 +1,34 @@
 'use strict';
 
-var requireHelper = require('../require_helper')
+var requireHelper = require('../../require_helper')
   , app = requireHelper('app')
   , should = require('chai').should()
   , request = require('supertest')
-  , utils = require('../test.utils')  
+  , utils = require('../../test.utils')  
   , config = requireHelper('config/environment')
 ;
 
-describe('Platforms : controllers', function () {
+describe('Feeds : controllers', function () {
 
-  it('GET /platforms : should return list of platforms', function(done) {
+  it('should return list of feeds : GET /feeds', function(done) {
     request(app)
-    .get('/v1/platforms')
+    .get('/v1/feeds')
     .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
-      var platforms = res.body;
-      should.exist(platforms);
-      platforms.should.have.length(2);
-      should.not.exist(platforms[0]._id);
-      should.exist(platforms[0].name);
+      var feeds = res.body;
+      should.exist(feeds);
+      feeds.should.have.length(3);
+      should.not.exist(feeds[0]._id);
+      should.exist(feeds[0].name);      
       done();
     })
   }); 
 
-  it('PUT /platforms/{PLATFORM} : should create a platform stored on database', function(done) {
+  it('should create a feed stored on database : PUT /feeds/{FEED}', function(done) {
     request(app)
-    .put('/v1/platforms/windowsPhone')
+    .put('/v1/feeds/another')
     .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
@@ -38,9 +38,9 @@ describe('Platforms : controllers', function () {
   }); 
 
 
-  it('DELETE /platforms/{PLATFORM} : should delete a platform from database by name', function(done) {
+  it('should delete a feed from database by name : DELETE /feeds/{FEED}', function(done) {
     request(app)
-    .delete('/v1/platforms/IOS')
+    .delete('/v1/feeds/news')
     .set('authorization', 'Basic key:' + config.security)
     .expect(200)
     .end(function(err, res) {
